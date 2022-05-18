@@ -1,6 +1,6 @@
 <ul>
 <h2>Требования Laravel</h2>
-<li>PHP >= 7.2.5</li>
+<li>PHP ^8.0.2 (У меня 8.1.5)</li>
 <li>BCMath PHP Extension</li>
 <li>Ctype PHP Extension</li>
 <li>Fileinfo PHP extension</li>
@@ -15,5 +15,7 @@
 
 <code>$ make setup</code> - для установки пакетов и наката миграций<br>
 <code>$ make start</code> - для запуска веб-сервера<br>
+<code>$ make test</code> - для запуска тестов<br>
 
-Документация swagger находится <a href="http://localhost:8000/api/documentation">здесь</a>:
+Документация swagger находится <a href="http://localhost:8000/api/documentation">здесь</a>.
+Ну в смысле на веб-сервере с api она находится.
