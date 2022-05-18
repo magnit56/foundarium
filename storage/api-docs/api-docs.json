@@ -1,0 +1,252 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API управления автомобилями",
+        "description": "Документация для api управления автомобилями",
+        "contact": {
+            "email": "samat.tulegenov@phystech.edu"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api",
+            "description": "API управления автомобилями"
+        }
+    ],
+    "paths": {
+        "/api": {},
+        "/rides/{car}/start/{user}": {
+            "post": {
+                "tags": [
+                    "Ride"
+                ],
+                "summary": "Начать поездку",
+                "description": "Метод начинает поездку на автомобиле пользователем",
+                "operationId": "start",
+                "parameters": [
+                    {
+                        "name": "car",
+                        "in": "path",
+                        "description": "идентификатор автомобиля",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "идентификатор пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Поездка началась",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result": {
+                                        "summary": "Успешно",
+                                        "value": {
+                                            "success": "Поездка началась"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Автомобиль занят или пользователь уже управляет каким-то автомобилем",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result2": {
+                                        "summary": "Автомобиль занят",
+                                        "value": {
+                                            "error": "Автомобиль уже управляется каким-то пользователем"
+                                        }
+                                    },
+                                    "result3": {
+                                        "summary": "Пользователь уже за рулем",
+                                        "value": {
+                                            "error": "Пользователь уже управляет каким-то автомобилем"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Такого автомобиля или пользователя не существует"
+                    },
+                    "520": {
+                        "description": "Неизвестная ошибка",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result4": {
+                                        "summary": "Неизвестная ошибка",
+                                        "value": {
+                                            "error": "Какая-то ошибка"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rides/{car}/finish": {
+            "patch": {
+                "tags": [
+                    "Ride"
+                ],
+                "summary": "Окончить поездку",
+                "description": "Метод оканчивает поездку на автомобиле",
+                "operationId": "finish",
+                "parameters": [
+                    {
+                        "name": "car",
+                        "in": "path",
+                        "description": "идентификатор автомобиля",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Поездка окончена",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result5": {
+                                        "summary": "Успешно",
+                                        "value": {
+                                            "success": "Поездка окончена"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Такой автомобиль не управляется кем-либо или не существует"
+                    },
+                    "520": {
+                        "description": "Неизвестная ошибка",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "examples": {
+                                    "result6": {
+                                        "summary": "Неизвестная ошибка",
+                                        "value": {
+                                            "error": "Какая-то ошибка"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Car": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Ride": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "car_id": {
+                        "type": "integer"
+                    },
+                    "active": {
+                        "type": "boolean"
+                    },
+                    "start_time": {
+                        "type": "string"
+                    },
+                    "finish_time": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "email_verified_at": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "remember_token": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Методы работы с API",
+            "description": "все методы для работы с API"
+        }
+    ]
+}
