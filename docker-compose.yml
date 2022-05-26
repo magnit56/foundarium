@@ -1,0 +1,45 @@
+version: '3.3'
+services:
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: web
+        ports:
+            - "8181:8181"
+        volumes :
+            - ".:/laravel"
+        networks:
+            - myNetwork
+        depends_on:
+            - db
+            - redis
+
+    db:
+        image: mysql:5.7
+        container_name: db
+        ports:
+            - 33061:3306
+        volumes:
+            - dbdata:/var/lib/mysql/
+        environment:
+            - MYSQL_ROOT_PASSWORD=secret_root_password
+            - MYSQL_DATABASE=your_database
+            - MYSQL_USER=your_user
+            - MYSQL_PASSWORD=your_password
+        networks:
+            - myNetwork
+
+    redis:
+        image: redis:7.0.0-alpine
+        container_name: redis
+        networks:
+            - myNetwork
+
+volumes:
+    dbdata:
+        driver: local
+
+networks:
+    myNetwork:
+        driver: bridge
